@@ -1,8 +1,10 @@
 // 生成扩展图标（纯 Node，无第三方依赖）
 import { deflateSync } from 'node:zlib';
 import { writeFileSync, mkdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const OUT = 'D:/software/readnest/icons';
+const OUT = join(dirname(fileURLToPath(import.meta.url)), '..', 'icons');
 mkdirSync(OUT, { recursive: true });
 
 const crcTable = (() => {

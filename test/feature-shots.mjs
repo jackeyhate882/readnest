@@ -1,8 +1,10 @@
 // 用「纸感」主题给几张功能截图（图表 / 配图 / 公式）
 import { writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 const CDP = 'http://127.0.0.1:9222';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const OUT = 'D:/software/readnest/docs/';
+const OUT = join(dirname(fileURLToPath(import.meta.url)), '..', 'docs') + '/';
 
 class C {
   constructor(u) {

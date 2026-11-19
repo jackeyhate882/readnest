@@ -1,8 +1,9 @@
 // 校验 manifest 与各页面引用的文件是否都存在
 import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = 'D:/software/readnest/';
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..') + '/';
 const problems = [];
 
 const manifest = JSON.parse(readFileSync(ROOT + 'manifest.json', 'utf8'));

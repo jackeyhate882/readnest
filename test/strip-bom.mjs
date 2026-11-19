@@ -1,8 +1,9 @@
 // 去掉文件开头的 BOM，保证 JSON/CSS/JS 干净
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
-import { join, extname } from 'node:path';
+import { join, extname, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = 'D:/software/readnest';
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXTS = new Set(['.js', '.css', '.html', '.json', '.md', '.mjs']);
 let fixed = 0;
 const touched = [];

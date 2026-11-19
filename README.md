@@ -111,7 +111,7 @@ Chrome works the same way via `chrome://extensions`. Prefer a zip? Grab it from
 
 1. 打开 `edge://extensions/`
 2. 打开左下角「开发人员模式」
-3. 点「加载解压缩的扩展」，选择本目录 `D:\software\readnest`
+3. 点「加载解压缩的扩展」，选择你下载/克隆下来的 `readnest` 目录（里面有 `manifest.json` 的那一层）
 4. 把「阅巢 ReadNest」固定到工具栏（地址栏右侧的拼图图标 → 固定）
 5. 第一次安装会自动打开书库页
 
@@ -191,31 +191,33 @@ readnest/
 ## 开发与自测
 
 ```powershell
-cd D:\software\readnest
+# 在克隆下来的项目根目录执行（能看到 manifest.json 的那一层）
+cd readnest
 
 # 语法检查
 node --check reader.js
 node --check background.js
 
 # 后台抓取流程冒烟测试（模拟 chrome API，15 项断言）
-node test\background-smoke.mjs
+node test/background-smoke.mjs
 
 # manifest / 页面引用完整性校验
-node test\validate.mjs
+node test/validate.mjs
 
 # 本地起静态服务，直接用浏览器打开 reader.html / library.html
 python -m http.server 8765 --bind 127.0.0.1
 # 访问 http://127.0.0.1:8765/test/seed.html?f=anthropic&u=https://www.anthropic.com/research/components-of-agent-memory
 ```
 
-**真浏览器端到端测试**（会真的加载扩展、抓真实网页、写 chrome.storage）：
+**真浏览器端到端测试**（会真的加载扩展、抓真实网页、写 chrome.storage）。把下面两条命令里的
+`<项目路径>` 换成你本地 `readnest` 目录的绝对路径：
 
 ```powershell
 # 1) 用调试端口启动一个干净的 Edge，并加载扩展
 & "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" `
   --headless=new --remote-debugging-port=9222 `
-  --user-data-dir=D:\software\readnest\test\edge-profile `
-  --load-extension=D:\software\readnest about:blank
+  --user-data-dir="<项目路径>\test\edge-profile" `
+  --load-extension="<项目路径>" about:blank
 
 # 2) 另开一个终端
 node test\e2e-cdp.mjs
@@ -234,7 +236,7 @@ node test\e2e-cdp.mjs
 - `test/check-alex-live.mjs` 对线上 alexwang 跑两条抓取路径，校验公式数量、无红色报错、无残留 `$`、图表数量与内嵌 CSS
 - `test/shot.mjs` 给扩展里某个阅读页截图，方便看排版
 - `test/seed.html` 会把 `test/samples/*.html` 灌进本地存储再跳到阅读页，用于在没有扩展环境时调试阅读页
-- `test/samples/` 是八篇真实文章的 HTML 快照，用于验证抽取、公式与图表
+- `test/samples/` ← 真实文章 HTML 快照。**仓库里不包含**（版权原因），需要跑依赖它的测试前先执行 `node test/fetch-samples.mjs` 本地生成（需要外网）
 - `test/gen-icons.mjs` 重新生成图标
 - `test/strip-bom.mjs` 清理文件 BOM（Windows PowerShell 写文件容易带入）
 

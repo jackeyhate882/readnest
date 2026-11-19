@@ -1,8 +1,10 @@
 // 用 Node 模拟 MV3 Service Worker 环境，跑一遍 background.js 的抓取流程
 import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createContext, runInContext } from 'node:vm';
 
-const ROOT = 'D:/software/readnest/';
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..') + '/';
 const store = new Map();
 const created = [];
 const removed = [];

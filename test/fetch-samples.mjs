@@ -1,7 +1,9 @@
 // 抓取几篇真实文章 HTML，作为抽取/阅读的测试样本
 import { writeFileSync, mkdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const OUT = 'D:/software/readnest/test/samples';
+const OUT = join(dirname(fileURLToPath(import.meta.url)), 'samples');
 mkdirSync(OUT, { recursive: true });
 
 const targets = [

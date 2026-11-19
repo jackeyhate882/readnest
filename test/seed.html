@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>ReadNest 测试种子</title>
+  </head>
+  <body>
+    <p id="log">seeding…</p>
+    <script>
+      (async () => {
+        const q = new URLSearchParams(location.search);
+        const file = q.get('f') || 'anthropic';
+        const url = q.get('u') || 'https://example.com/' + file;
+        const res = await fetch('samples/' + file + '.html');
+        if (!res.ok) throw new Error('fetch ' + res.status);
+        const html = await res.text();
+        const token = 'test-' + file;
+        localStorage.setItem('rn_raw:' + token, JSON.stringify({ html, url, ts: Date.now() }));
+        // 加个随机参数，避免浏览器缓存旧的 reader.html / 脚本
+        location.href = '../reader.html?raw=' + token + '&cb=' + Date.now();
+      })().catch((e) => {
+        document.getElementById('log').textContent = 'ERR ' + e.message;
+      });
+    </script>
+  </body>
+</html>

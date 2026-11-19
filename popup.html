@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>阅巢 ReadNest</title>
+    <link rel="stylesheet" href="popup.css?v=1.9.0" />
+  </head>
+  <body>
+    <div class="pop">
+      <header class="pop-head">
+        <img src="icons/icon48.png" alt="" class="logo" />
+        <div class="brand">
+          <b>阅巢 ReadNest</b>
+          <span>把网页变成可标注的书</span>
+        </div>
+        <button id="btnSettings" class="icon-btn" title="设置">⚙</button>
+      </header>
+
+      <button id="btnGrab" class="btn primary big">抓取当前页面</button>
+
+      <div class="url-row">
+        <input id="url" type="url" placeholder="或粘贴文章链接，回车抓取" spellcheck="false" />
+        <button id="btnUrl" class="btn">抓取</button>
+      </div>
+
+      <div id="status" class="status" hidden></div>
+
+      <section class="recent">
+        <div class="sec-head">
+          <span>最近</span>
+          <a href="#" id="btnLibrary">全部书库 →</a>
+        </div>
+        <ul id="recentList" class="recent-list"></ul>
+      </section>
+
+      <footer class="pop-foot">
+        <span>Alt+Shift+S 保存 · 右键也能保存</span>
+        <span id="count"></span>
+      </footer>
+    </div>
+    <script src="common/bridge.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

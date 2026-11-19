@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>设置 · 阅巢 ReadNest</title>
+    <link rel="stylesheet" href="options.css?v=1.9.0" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="head">
+        <img src="icons/icon48.png" alt="" />
+        <div>
+          <h1>阅巢 ReadNest 设置</h1>
+          <p>所有设置与文章都保存在本机浏览器，不会上传。</p>
+        </div>
+      </header>
+
+      <section class="card">
+        <h2>划词翻译</h2>
+        <p class="desc">选中文字后点「译」，或右键里复制到别处翻译。<b>国内网络</b>建议选第三个，用 DeepSeek 等 API。</p>
+
+        <div class="providers" id="providers">
+          <label class="prov">
+            <input type="radio" name="provider" value="google" />
+            <span class="p-name">Google 免费接口</span>
+            <span class="p-desc">无需密钥，速度快；部分网络环境需要代理。</span>
+          </label>
+          <label class="prov">
+            <input type="radio" name="provider" value="mymemory" />
+            <span class="p-name">MyMemory 免费接口</span>
+            <span class="p-desc">无需密钥，每天有免费额度，长段落会自动分段。</span>
+          </label>
+          <label class="prov">
+            <input type="radio" name="provider" value="api" />
+            <span class="p-name">OpenAI 兼容 API</span>
+            <span class="p-desc">翻译质量最好，需要填 Base URL、模型名和 API Key（DeepSeek、Kimi、通义等均可）。</span>
+          </label>
+        </div>
+
+        <div class="grid2">
+          <label class="field">
+            <span>目标语言</span>
+            <select id="targetLang">
+              <option value="zh-CN">简体中文</option>
+              <option value="zh-TW">繁體中文</option>
+              <option value="en">English</option>
+              <option value="ja">日本語</option>
+              <option value="ko">한국어</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="apiBox" class="apibox" hidden>
+          <label class="field">
+            <span>Base URL</span>
+            <input id="apiBase" type="text" placeholder="https://api.deepseek.com/v1" spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>模型名</span>
+            <input id="apiModel" type="text" placeholder="deepseek-chat" spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>API Key</span>
+            <input id="apiKey" type="password" placeholder="sk-…（只保存在本机）" spellcheck="false" />
+          </label>
+        </div>
+
+        <div class="row">
+          <button id="btnTest" class="primary">测试翻译</button>
+          <span id="testOut" class="test-out"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>阅读外观</h2>
+        <div class="grid3">
+          <label class="field">
+            <span>主题</span>
+            <select id="theme">
+              <option value="paper">纸感（默认）</option>
+              <option value="site">跟随原站风格</option>
+              <option value="light">浅色</option>
+              <option value="sepia">米色（护眼）</option>
+              <option value="dark">深色</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>字号（<b id="fontVal">19</b> px）</span>
+            <input id="fontSize" type="range" min="14" max="28" step="1" />
+          </label>
+          <label class="field">
+            <span>版心宽度（<b id="widthVal">700</b> px）</span>
+            <input id="lineWidth" type="range" min="600" max="980" step="20" />
+          </label>
+        </div>
+        <p class="desc">
+          「纸感」用衬线字体和暖纸底色，接近 alexwang.ai 这类博客的排版；「跟随原站风格」会在抓取时记录原文的字体和配色（仅标签页抓取的文章有）。阅读页右上角的圆形按钮也能快速切换。
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>AI 概述</h2>
+        <p class="desc">
+          阅读页顶部会显示一段概述。配好上面的 OpenAI 兼容 API 后由模型生成；没有 Key 时自动退化为本地摘录（按词频挑要点）。
+        </p>
+        <label class="check"><input id="autoSummary" type="checkbox" /> 打开文章时自动生成概述（有 Key 才会调用模型）</label>
+        <label class="field" style="max-width: 260px">
+          <span>概述长度</span>
+          <select id="summaryLength">
+            <option value="short">短（约 120 字，3 条要点）</option>
+            <option value="medium">中（约 200 字，3-4 条要点）</option>
+            <option value="long">长（约 350 字，5-6 条要点）</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>抓取行为</h2>
+        <label class="check"><input id="fallbackViaTab" type="checkbox" /> 直连抓取失败时，用后台标签页再试一次（推荐）</label>
+        <label class="check"><input id="closeSourceTab" type="checkbox" /> 后台标签页抓取完成后自动关闭它</label>
+        <p class="desc">像 Substack、微信公众号等在浏览器里能正常打开的页面，通常需要用后台标签页方式抓取。</p>
+      </section>
+
+      <section class="card">
+        <h2>数据</h2>
+        <p class="desc" id="dataStat">正在统计…</p>
+        <div class="row">
+          <button id="btnExportAll" class="ghost">导出全部文章（JSON）</button>
+          <button id="btnClear" class="danger ghost">清空书库</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>怎么用</h2>
+        <ol class="howto">
+          <li>在任意网页点浏览器右上角的阅巢图标 →「抓取当前页面」；或把链接粘到书库输入框。</li>
+          <li>阅读页里选中文字，浮出的工具条可以<b>高亮</b>（四种颜色）、<b>写笔记</b>、<b>划词翻译</b>。</li>
+          <li>点右上角「标注」能看到全部高亮和笔记；「⋯」里可以导出 Markdown、重新抓取正文。</li>
+          <li>快捷键：<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> 保存当前页；阅读页 <kbd>N</kbd> 标注栏、<kbd>T</kbd> 目录、<kbd>Esc</kbd> 关闭浮层。</li>
+        </ol>
+      </section>
+    </div>
+    <script src="common/bridge.js"></script>
+    <script src="common/translate.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

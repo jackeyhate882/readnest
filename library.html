@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>书库 · 阅巢 ReadNest</title>
+    <link rel="stylesheet" href="library.css?v=1.9.0" />
+  </head>
+  <body>
+    <header class="head">
+      <div class="brand">
+        <img src="icons/icon48.png" alt="" />
+        <div>
+          <b>阅巢 · 书库</b>
+          <span id="libStat">0 篇文章</span>
+        </div>
+      </div>
+
+      <div class="addbox">
+        <input id="addUrl" type="url" placeholder="粘贴文章链接（https://…），回车即可抓取" spellcheck="false" />
+        <button id="btnAdd" class="primary">抓取到书库</button>
+      </div>
+
+      <div class="tools">
+        <input id="search" type="search" placeholder="搜索标题、站点、标签" />
+        <select id="sort" title="排序">
+          <option value="saved">最新保存</option>
+          <option value="updated">最近更新</option>
+          <option value="words">字数最多</option>
+          <option value="title">按标题</option>
+        </select>
+        <button id="btnSettings" class="ghost" title="设置">设置</button>
+      </div>
+    </header>
+
+    <div id="opbar" class="opbar" hidden>
+      <div class="spinner"></div>
+      <span id="opText">正在抓取…</span>
+    </div>
+
+    <div id="tagRow" class="tag-row"></div>
+
+    <main>
+      <div id="grid" class="grid"></div>
+      <div id="empty" class="empty" hidden>
+        <h2>书库还是空的</h2>
+        <p>把上面输入框里的链接粘进来，或打开一篇网页点右上角的阅巢图标抓取。</p>
+        <ul>
+          <li><b>抓取</b>：自动提取正文，去掉广告和导航栏</li>
+          <li><b>阅读</b>：干净排版，可调字号、主题，进度自动记住</li>
+          <li><b>标注</b>：划词高亮、写笔记、划词翻译（Google / MyMemory / 你自己的 API）</li>
+          <li><b>导出</b>：一键把原文标题、高亮和笔记导出成 Markdown</li>
+        </ul>
+        <p class="dim">所有内容都保存在本机浏览器里，不上传任何服务器。</p>
+      </div>
+    </main>
+
+    <script src="common/bridge.js"></script>
+    <script src="library.js"></script>
+  </body>
+</html>

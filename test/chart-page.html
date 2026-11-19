@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chart capture fixture</title>
+    <style>
+      body { font: 16px/1.7 Georgia, serif; max-width: 720px; margin: 40px auto; }
+      figure { margin: 28px 0; }
+      figcaption { font-size: 13px; color: #666; text-align: center; }
+      .slider { font-size: 13px; color: #333; }
+    </style>
+  </head>
+  <body>
+    <article>
+      <h1>Charts that only exist at runtime</h1>
+      <p>
+        This page draws figures with JavaScript after load, the same shape of problem as an interactive
+        research post. The reader extension should freeze them into images.
+      </p>
+
+      <figure>
+        <svg id="drawn-svg" viewBox="0 0 400 200" width="400" height="200" role="img" aria-label="bar chart drawn by JS"></svg>
+        <figcaption>Figure 1 · A bar chart drawn into an inline SVG by JavaScript.</figcaption>
+      </figure>
+
+      <h2>Canvas chart</h2>
+      <p>Below is a canvas figure, which must be turned into a PNG image.</p>
+      <figure>
+        <canvas id="drawn-canvas" width="400" height="200"></canvas>
+        <figcaption>Figure 2 · A line chart drawn on a canvas element.</figcaption>
+      </figure>
+
+      <h2>Controls</h2>
+      <div class="slider"><label>stored memories <i>M</i> = <input type="range" min="1" max="64" value="32" /> 32</label></div>
+
+      <h2>Formulas</h2>
+      <p>Inline math like $p(x)\propto e^{-g(x)/\beta}$ and a tiny one $-1$ plus $10^{-4}$ should render.</p>
+      <p>\[
+        \mathcal{L}(\theta)=\mathbb{E}_{x\sim p_{\mathrm{data}}}\left[-\log p_\theta(x)\right]
+      \]</p>
+      <p>Unicode text and math mixed: recall drops to $0.3$ while $\beta$ grows.</p>
+    </article>
+
+    <script>
+      const svg = document.getElementById('drawn-svg');
+      const ns = 'http://www.w3.org/2000/svg';
+      const data = [0.9, 0.7, 0.5, 0.3, 0.2];
+      data.forEach((v, i) => {
+        const rect = document.createElementNS(ns, 'rect');
+        rect.setAttribute('x', String(40 + i * 64));
+        rect.setAttribute('y', String(180 - v * 160));
+        rect.setAttribute('width', '40');
+        rect.setAttribute('height', String(v * 160));
+        rect.setAttribute('fill', '#4e79ff');
+        svg.appendChild(rect);
+        const t = document.createElementNS(ns, 'text');
+        t.setAttribute('x', String(60 + i * 64));
+        t.setAttribute('y', '195');
+        t.setAttribute('font-size', '10');
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('fill', '#333');
+        t.textContent = 'M=' + (i + 1) * 8;
+        svg.appendChild(t);
+      });
+      // axis lines, styled by CSS rather than attributes on purpose
+      const axis = document.createElementNS(ns, 'line');
+      axis.setAttribute('x1', '30');
+      axis.setAttribute('y1', '180');
+      axis.setAttribute('x2', '380');
+      axis.setAttribute('y2', '180');
+      axis.setAttribute('stroke', '#999');
+      svg.appendChild(axis);
+
+      const canvas = document.getElementById('drawn-canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, 400, 200);
+      ctx.strokeStyle = '#4e79ff';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      for (let i = 0; i <= 40; i++) {
+        const x = 20 + i * 9;
+        const y = 170 - 120 * Math.exp(-i / 8) * (0.6 + 0.4 * Math.sin(i / 3));
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = '#333';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('loss over steps', 150, 20);
+    </script>
+  </body>
+</html>

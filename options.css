@@ -1,0 +1,253 @@
+/* 阅巢 ReadNest — 设置页 */
+:root {
+  --bg: #f5f3ee;
+  --card: #fbf9f4;
+  --fg: #2c2d30;
+  --soft: #43443f;
+  --muted: #7a7770;
+  --line: rgba(44, 45, 48, 0.14);
+  --brand: #b3202a;
+  --brand-soft: rgba(179, 32, 42, 0.08);
+}
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+}
+button,
+input,
+select {
+  font-family: inherit;
+}
+.wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 26px 20px 70px;
+}
+.head {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.head img {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+}
+.head h1 {
+  font-size: 19px;
+  margin: 0;
+}
+.head p {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 16px rgba(24, 38, 62, 0.05);
+}
+.card h2 {
+  font-size: 15px;
+  margin: 0 0 6px;
+}
+.desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+.providers {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.prov {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  background: #fcfdff;
+}
+.prov:has(input:checked) {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+.prov input {
+  margin-top: 3px;
+  accent-color: var(--brand);
+}
+.p-name {
+  font-weight: 600;
+  font-size: 13.5px;
+  display: block;
+}
+.p-desc {
+  font-size: 12px;
+  color: var(--muted);
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12.5px;
+  color: var(--soft);
+}
+.field span {
+  color: var(--muted);
+}
+.field input[type='text'],
+.field input[type='password'],
+.field select {
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--fg);
+  background: #fff;
+  outline: none;
+}
+.field input:focus,
+.field select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.12);
+}
+.field input[type='range'] {
+  accent-color: var(--brand);
+  height: 24px;
+}
+.apibox {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  background: #f8fafd;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.primary,
+.ghost {
+  border-radius: 9px;
+  padding: 8px 15px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--soft);
+}
+.primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.ghost:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+.danger.ghost {
+  color: #c33;
+  border-color: #f0d4d4;
+}
+.test-out {
+  font-size: 12.5px;
+  color: var(--muted);
+  max-width: 460px;
+  word-break: break-word;
+}
+.test-out.ok {
+  color: #1d7a45;
+}
+.test-out.err {
+  color: #b33;
+}
+.check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--soft);
+  margin: 8px 0;
+}
+.check input {
+  accent-color: var(--brand);
+}
+.howto {
+  font-size: 13px;
+  color: var(--soft);
+  line-height: 1.95;
+  padding-left: 20px;
+  margin: 0;
+}
+kbd {
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 11.5px;
+  background: #f7f9fc;
+  font-family: inherit;
+}
+.rn-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 12px);
+  background: #202634;
+  color: #fff;
+  font-size: 13px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+.rn-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.rn-toast.error {
+  background: #b93333;
+}
+@media (max-width: 620px) {
+  .grid2,
+  .grid3 {
+    grid-template-columns: 1fr;
+  }
+}

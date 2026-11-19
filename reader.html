@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>阅巢 ReadNest</title>
+    <link rel="stylesheet" href="vendor/katex/katex.min.css" />
+    <link rel="stylesheet" href="reader.css?v=1.9.1" />
+  </head>
+  <body>
+    <div class="progress"><div id="progBar"></div></div>
+
+    <header class="bar">
+      <div class="bar-left">
+        <button id="btnBack" class="tb" title="返回书库（Esc）">← 书库</button>
+        <span class="divider"></span>
+        <span id="crumb" class="crumb"></span>
+      </div>
+      <div class="bar-right">
+        <button id="btnFontDown" class="tb" title="缩小字号">A−</button>
+        <button id="btnFontUp" class="tb" title="放大字号">A+</button>
+        <button id="btnTheme" class="tb" title="切换主题">◐</button>
+        <button id="btnToc" class="tb" title="目录">目录</button>
+        <button id="btnAnno" class="tb" title="高亮与笔记">标注<span id="annoCount" class="badge">0</span></button>
+        <button id="btnMore" class="tb" title="更多">⋯</button>
+      </div>
+      <div id="moreMenu" class="menu" hidden>
+        <button data-act="export">导出 Markdown（含笔记）</button>
+        <button data-act="source">打开原网页</button>
+        <button data-act="copyurl">复制原文链接</button>
+        <button data-act="refetch">重新抓取正文</button>
+        <hr />
+        <button data-act="delete" class="danger">从书库删除</button>
+        <button data-act="settings">设置</button>
+      </div>
+    </header>
+
+    <main class="rn-page">
+      <header class="art-head">
+        <div class="src" id="srcLine"></div>
+        <h1 id="title"></h1>
+        <div class="metaline" id="metaline"></div>
+        <div class="tags" id="tagRow"></div>
+      </header>
+
+      <section id="summaryCard" class="summary" hidden>
+        <div class="summary-head">
+          <span class="summary-badge" id="sumBadge">概述</span>
+          <span class="summary-source" id="sumSource"></span>
+          <div class="summary-actions">
+            <button id="sumGen" class="mini">生成概述</button>
+            <button id="sumCopy" class="mini" hidden>复制</button>
+            <button id="sumToggle" class="mini" hidden>收起</button>
+          </div>
+        </div>
+        <div id="sumBody" class="summary-body"></div>
+      </section>
+
+      <article id="content" class="content"></article>
+
+      <section class="art-foot">
+        <div class="foot-tip">选中正文文字，可以高亮、写笔记或划词翻译；所有内容保存在本机。</div>
+        <button id="btnAddNote" class="ghost">＋ 写一条不绑定原文的笔记</button>
+      </section>
+    </main>
+
+    <aside id="side" class="side" hidden>
+      <div class="side-tabs">
+        <button data-tab="toc" class="on">目录</button>
+        <button data-tab="anno">标注 <span id="tabCount">0</span></button>
+        <button id="sideClose" class="side-close" title="收起">×</button>
+      </div>
+      <div id="tocList" class="side-body"></div>
+      <div id="annoList" class="side-body" hidden></div>
+    </aside>
+
+    <div id="selbar" class="selbar" hidden>
+      <button data-act="copy" title="复制">复制</button>
+      <span class="sep"></span>
+      <button class="dot" data-act="hl" data-color="yellow" title="黄色高亮"><i></i></button>
+      <button class="dot" data-act="hl" data-color="green" title="绿色高亮"><i class="green"></i></button>
+      <button class="dot" data-act="hl" data-color="blue" title="蓝色高亮"><i class="blue"></i></button>
+      <button class="dot" data-act="hl" data-color="pink" title="粉色高亮"><i class="pink"></i></button>
+      <span class="sep"></span>
+      <button data-act="note" title="写笔记">笔记</button>
+      <button data-act="trans" class="brand" title="翻译">译</button>
+    </div>
+
+    <div id="tcard" class="tcard" hidden>
+      <div class="tc-head">
+        <span id="tcLabel">译文</span>
+        <div>
+          <button id="tcSwap" class="mini" title="换段落">↺</button>
+          <button id="tcClose" class="mini" title="关闭">×</button>
+        </div>
+      </div>
+      <div id="tcBody" class="tc-body"></div>
+      <div class="tc-foot">
+        <button id="tcCopy" class="mini">复制译文</button>
+        <button id="tcNote" class="mini">存为笔记</button>
+        <a class="mini" id="tcSettings" href="#">翻译设置</a>
+      </div>
+    </div>
+
+    <div id="dlg" class="dlg" hidden>
+      <div class="dlg-box">
+        <div class="dlg-head" id="dlgTitle">写笔记</div>
+        <div class="dlg-quote" id="dlgQuote" hidden></div>
+        <textarea id="dlgText" placeholder="写下你的想法…（Ctrl+Enter 保存）"></textarea>
+        <div class="dlg-foot">
+          <button id="dlgDel" class="danger ghost" hidden>删除</button>
+          <span class="spacer"></span>
+          <button id="dlgCancel" class="ghost">取消</button>
+          <button id="dlgSave" class="primary">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p id="loadingText">正在解析正文…</p>
+    </div>
+
+    <script src="vendor/Readability.js"></script>
+    <script src="vendor/katex/katex.min.js"></script>
+    <script src="common/bridge.js?v=1.9.0"></script>
+    <script src="common/extract.js?v=1.9.0"></script>
+    <script src="common/translate.js?v=1.7.0"></script>
+    <script src="common/summarize.js?v=1.7.0"></script>
+    <script src="reader.js?v=1.9.1"></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>MathJax typeset fixture</title>
+    <style>
+      body { font: 16px/1.7 Georgia, serif; max-width: 720px; margin: 40px auto; }
+      figure { margin: 26px 0; }
+      figcaption { font-size: 13px; color: #666; }
+    </style>
+  </head>
+  <body>
+    <article>
+      <h1>MathJax page where TeX is replaced at runtime</h1>
+      <p>
+        This paragraph starts as TeX. A local script then swaps it for MathJax-like
+        <code>mjx-container</code> output, which is what happens on real research blogs: the
+        original TeX is gone from the DOM.
+      </p>
+      <p id="inline-math">Recall falls as $p(x)\propto e^{-g(x)/\beta}$ gets flat, and $-1$ shows up in the exponent.</p>
+      <p id="display-math">\[
+        \mathcal{L}(\theta)=\mathbb{E}_{x\sim p_{\mathrm{data}}}\left[-\log p_\theta(x)\right]
+      \]</p>
+
+      <figure>
+        <canvas id="chart" width="420" height="180"></canvas>
+        <figcaption>Figure 1 · A canvas chart that only exists after JS runs.</figcaption>
+      </figure>
+
+      <p>Tail paragraph so Readability has something to chew on after the figure.</p>
+    </article>
+    <script>
+      // 模拟 MathJax：把 TeX 换成 mjx-container（真实 TeX 从 DOM 消失）
+      function fakeTypeset(el) {
+        const html = el.innerHTML;
+        el.innerHTML = html.replace(/\$[^$]+\$|\\\[[\s\S]+?\\\]/g, () =>
+          '<mjx-container class="MathJax" jax="CHTML"><mjx-math><mjx-mi>p</mjx-mi><mjx-mo>(</mjx-mo><mjx-mi>x</mjx-mi><mjx-mo>)</mjx-mo></mjx-math></mjx-container>'
+        );
+      }
+      fakeTypeset(document.getElementById('inline-math'));
+      fakeTypeset(document.getElementById('display-math'));
+
+      const canvas = document.getElementById('chart');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, 420, 180);
+      ctx.fillStyle = '#e0642f';
+      for (let i = 0; i < 6; i++) ctx.fillRect(30 + i * 60, 160 - i * 18, 36, i * 18);
+      ctx.fillStyle = '#333';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('capacity vs M', 150, 20);
+    </script>
+  </body>
+</html>

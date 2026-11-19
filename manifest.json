@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "阅巢 ReadNest — 网页阅读器",
+  "version": "1.9.0",
+  "description": "像 Zotero 抓取文献一样把网页文章抓进书库：纯净阅读、公式渲染、划词翻译、高亮与笔记，全部保存在本地。",
+  "permissions": ["storage", "unlimitedStorage", "scripting", "tabs", "contextMenus"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "阅巢 ReadNest",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "save-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "保存当前页面到阅巢"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

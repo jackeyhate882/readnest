@@ -1,0 +1,18 @@
+# 依赖 / 构建产物
+node_modules/
+*.log
+
+# 测试产物
+test/edge-profile-*/
+docs/_*.png
+playwright-report/
+test-results/
+
+# 真实文章 HTML 快照（版权原因不入库；用 test/fetch-samples.mjs 本地生成）
+test/samples/*.html
+test/samples/*.css
+test/samples/*.json
+
+# 系统
+.DS_Store
+Thumbs.db

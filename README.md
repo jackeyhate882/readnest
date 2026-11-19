@@ -4,7 +4,7 @@
 [![Manifest V3](https://img.shields.io/badge/manifest-v3-2c2d30.svg)](manifest.json)
 [![No tracking](https://img.shields.io/badge/telemetry-none-2c2d30.svg)](#数据与隐私)
 
-**English** · [中文文档下方](#) 
+**English** (below) · **中文** (下一节开始)
 
 > ReadNest is a Zotero-style reader for the open web, packaged as a Manifest V3 browser extension for Edge/Chrome.
 > Save any article into a local library, read it in clean typography (bundled Newsreader / Cormorant Garamond),
@@ -14,11 +14,12 @@
 **Install from source** (unpacked extension):
 
 ```bash
-git clone https://github.com/<you>/readnest.git
+git clone https://github.com/jackeyhate882/readnest.git
 ```
 
 Then open `edge://extensions` → enable **Developer mode** → **Load unpacked** → select the `readnest` folder.
-Chrome works the same way via `chrome://extensions`.
+Chrome works the same way via `chrome://extensions`. Prefer a zip? Grab it from
+[Releases](https://github.com/jackeyhate882/readnest/releases).
 
 像 Zotero 抓论文一样抓网页：把任意文章收进自己的书库，去掉广告和导航，只留正文；
 阅读时划词就能**高亮、写笔记、翻译**，全部保存在本机。
